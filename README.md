@@ -35,4 +35,6 @@ How to push code.
 
 git push => Pushing the latest code
 
+ex. git push --set-upstream origin add_commit_readme
+
 \*\*Make sure you are in the right branch when working and pushing.
