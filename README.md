@@ -35,6 +35,8 @@ How to push code.
 
 git push => Pushing the latest code
 
+git push -u origin feat/post-editing
+
 ex. git push --set-upstream origin add_commit_readme
 
 \*\*Make sure you are in the right branch when working and pushing.
