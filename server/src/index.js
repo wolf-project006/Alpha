@@ -4,7 +4,7 @@ const knex = require('../db/knex.js');
 const dotenv = require('dotenv');
 
 dotenv.config({
-  path: '../.env',
+  path: './.env',
 });
 
 const app = express();
