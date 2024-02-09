@@ -17,7 +17,12 @@ exports.up = function (knex) {
       .timestamp("updateAt", { precision: 3 })
       .notNullable()
       .defaultTo(knex.fn.now(3));
-    table.foreign("userId").references("user_table.id").onDelete("CASCADE");
+    table.integer("userId").unsigned();
+    table
+      .foreign("userId")
+      .references("id")
+      .inTable("user_table")
+      .onDelete("CASCADE");
   });
 };
 
