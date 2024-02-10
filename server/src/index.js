@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const knex = require('../db/knex.js');
 const dotenv = require('dotenv');
+const userRoutes = require('../routes/user');
 
 dotenv.config({
   path: './.env',
@@ -12,8 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// articles routes
-app.post('/', (req, res) => {});
+// user routes
+app.use('/api/user', userRoutes);
 
 //test
 app.get('/', (req, res) => {
