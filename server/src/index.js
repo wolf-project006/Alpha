@@ -77,7 +77,6 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
-=======
 
 //timestamp
 const timeStamp = new Date().toISOString();
@@ -253,7 +252,6 @@ app.patch("/post_table/:id", async (req, res) => {
 
 // articles routes
 app.post('/', (req, res) => {});
-
 
 
 //test
