@@ -8,7 +8,12 @@ require('dotenv').config({
 module.exports = {
   development: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: {
+      database: 'blog_database',
+      user: process.env.DATABASE_USER || 'MyLord',
+      host: 'localhost',
+      port: 5432,
+    },
     migrations: {
       directory: './db/migrations',
     },
