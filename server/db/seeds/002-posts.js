@@ -3,6 +3,8 @@
  * @returns { Promise<void> }
  */
 exports.seed = async function (knex) {
+  const existingUserId = await knex('user_table').pluck('id');
+
   await knex('post_table').del();
   await knex('post_table').insert([
     {
@@ -12,7 +14,7 @@ exports.seed = async function (knex) {
       body: 'This is the first post body',
       createdAt: new Date().toISOString(),
       updateAt: new Date().toISOString(),
-      userId: 15,
+      userId: existingUserId[0],
     },
     {
       slug: 'second-post',
@@ -21,7 +23,7 @@ exports.seed = async function (knex) {
       body: 'This is the secons post body',
       createdAt: new Date().toISOString(),
       updateAt: new Date().toISOString(),
-      userId: 16,
+      userId: existingUserId[1],
     },
   ]);
 };
