@@ -12,7 +12,7 @@ exports.seed = async function (knex) {
       body: 'This is the first post body',
       createdAt: new Date().toISOString(),
       updateAt: new Date().toISOString(),
-      userId: 11,
+      userId: 15,
     },
     {
       slug: 'second-post',
@@ -21,7 +21,7 @@ exports.seed = async function (knex) {
       body: 'This is the secons post body',
       createdAt: new Date().toISOString(),
       updateAt: new Date().toISOString(),
-      userId: 12,
+      userId: 16,
     },
   ]);
 };
