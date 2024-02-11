@@ -1,34 +1,63 @@
-const { useState } = require('react');
+import { useState } from 'react';
+import '../styles/forms.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      const data = response.json();
+
+      if (response.ok) {
+        console.log('Login successfully');
+        // Store the token in localStorage or a state management solution
+        // Redirect to the authenticated part of your application
+      } else {
+        console.error('Invalid credentials:', data);
+        // handle failure
+      }
+    } catch (error) {
+      console.error('Error during login:', error.message);
+    }
   };
 
   return (
     <>
-      <form className="login" onSubmit={handleSubmit}>
-        <h3>Login</h3>
+      <div className="main">
+        <h3 className="title">Login</h3>
 
-        <label>Email</label>
-        <input
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button>Sign up</button>
-      </form>
+        <form className="login" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            placeholder="username"
+          />
+
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            placeholder="password"
+          />
+          <button className="submit" type="submit">
+            Login
+          </button>
+        </form>
+      </div>
     </>
   );
 };

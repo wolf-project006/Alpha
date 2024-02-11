@@ -41,7 +41,8 @@ app.post('/signup', async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    res.status(201).json('User created successfully');
+    const token = jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '3d' });
+    res.status(201).json({ token });
   } catch (error) {
     res.status(500).json('Error creating user');
   }
@@ -53,7 +54,7 @@ app.post('/login', async (req, res) => {
   try {
     const user = await knex('user_table').where({ username }).first();
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
       res.status(200).json({ token });
     } else {
       res.status(401).json('Invalid credentials');
