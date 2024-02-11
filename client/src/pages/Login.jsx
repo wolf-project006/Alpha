@@ -1,4 +1,5 @@
-const { useState } = require('react');
+import { useState } from 'react';
+import '../styles/forms.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -35,23 +36,28 @@ const Login = () => {
 
   return (
     <>
-      <form className="login" onSubmit={handleSubmit}>
-        <h3>Login</h3>
+      <div className="main">
+        <h3 className="title">Login</h3>
 
-        <label>Username</label>
-        <input
-          type="text"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button type="submit">Login</button>
-      </form>
+        <form className="login" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            placeholder="username"
+          />
+
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            placeholder="password"
+          />
+          <button className="submit" type="submit">
+            Login
+          </button>
+        </form>
+      </div>
     </>
   );
 };
