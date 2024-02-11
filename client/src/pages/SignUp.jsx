@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import '../styles/forms.css';
 import { useAuth } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +25,12 @@ const Signup = () => {
           password: password,
         }),
       });
-      const data = await response.json();
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
         login(data);
+        navigate('/dashboard');
         console.log('User created successfully');
-        // Redirect logic here
       } else {
         console.error('Error creating user:', data);
       }

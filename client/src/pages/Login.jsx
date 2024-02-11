@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import '../styles/forms.css';
 import { useAuth } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,16 +23,16 @@ const Login = () => {
           password: password,
         }),
       });
-      const data = await response.json();
 
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
         login(data);
+        navigate('/dashboard');
         console.log('Login successfully');
-        // Store the token in localStorage or a state management solution
-        // Redirect to the authenticated part of your application
       } else {
         console.error('Invalid credentials:', data);
-        // handle failure
+        navigate('/');
       }
     } catch (error) {
       console.error('Error during login:', error.message);
