@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import '../styles/forms.css';
+import { useAuth } from '../context/authContext';
 
 const Login = () => {
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,9 +21,10 @@ const Login = () => {
           password: password,
         }),
       });
-      const data = response.json();
+      const data = await response.json();
 
       if (response.ok) {
+        login(data);
         console.log('Login successfully');
         // Store the token in localStorage or a state management solution
         // Redirect to the authenticated part of your application

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import '../styles/forms.css';
+import { useAuth } from '../context/authContext';
 
 const Signup = () => {
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +25,7 @@ const Signup = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        login(data);
         console.log('User created successfully');
         // Redirect logic here
       } else {
