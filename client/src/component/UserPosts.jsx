@@ -7,7 +7,10 @@ const UserPosts = () => {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch('/posts');
+        const response = await fetch('/posts?userId=1');
+        const data = await response.json();
+
+        setPosts(data);
       } catch (error) {
         console.error('Error fetching user posts:', error);
       }
