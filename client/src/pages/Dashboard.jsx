@@ -1,5 +1,5 @@
 import UserPosts from '../component/UserPosts';
-import UserCard from '../component/Usercard';
+import UserCard from '../component/UserCard';
 import { useAuth } from '../context/authContext';
 
 const Dashboard = () => {
