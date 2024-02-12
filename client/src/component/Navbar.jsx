@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
-import "./Navbar.css"
+import "../styles/Navbar.css"
 import Signup from "../pages/SignUp";
 
 const Navbar = () => {
@@ -58,10 +58,10 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link class="nav-links-mobile" onClick={handleSignupClick}>Sign Up</Link>
+          <Link to="sign-up" class="nav-links-mobile" onClick={closeMobileMenu}>Sign Up</Link>
         </li>
       </ul>
-      {button && <Button buttonStyle='btn--outline' onClick={handleSignupClick}>SIGN UP</Button>}
+      {button && <Button buttonStyle='btn--outline' >SIGN UP</Button>}
       {showSignup && <Signup/>}
   </div>
 </nav>
