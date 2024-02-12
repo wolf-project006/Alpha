@@ -2,10 +2,12 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import "./Navbar.css"
+import Signup from "../pages/SignUp";
 
 const Navbar = () => {
   const [click , setClick] = useState(false)
   const [button, setButton] = useState(true)
+  const [showSignup, setShowSignup] = useState(false)
 
   const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false)
@@ -17,6 +19,12 @@ const Navbar = () => {
       setButton(true)
     }
   }
+
+  const handleSignupClick = () => {
+    closeMobileMenu()
+    setShowSignup(!showSignup)
+  }
+
 
   useEffect(() => {
     showButton()
@@ -50,13 +58,11 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/" className="nav-links-mobile" onClick={closeMobileMenu}>
-            Sign up
-          </Link>
+          <Link class="nav-links-mobile" onClick={handleSignupClick}>Sign Up</Link>
         </li>
       </ul>
-      {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
-
+      {button && <Button buttonStyle='btn--outline' onClick={handleSignupClick}>SIGN UP</Button>}
+      {showSignup && <Signup/>}
   </div>
 </nav>
     </>
