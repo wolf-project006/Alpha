@@ -11,7 +11,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/dashboard" component={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </AuthProvider>
       </Router>
