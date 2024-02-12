@@ -1,17 +1,20 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../src/pages/Home';
-import PostEdit from './component/PostEdit';
+import Dashboard from './pages/Dashboard';
+import { AuthProvider } from './context/authContext';
+
 
 function App() {
   return (
     <>
-      <h1>Text Editor</h1>
-      <PostEdit />
       <Router>
-        <Routes>
-          <Route path="/" exact Component={Home} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path="/dashboard" component={<Dashboard />} />
+          </Routes>
+        </AuthProvider>
       </Router>
     </>
   );
