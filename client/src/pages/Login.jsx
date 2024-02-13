@@ -2,36 +2,31 @@ import { useState } from 'react';
 import '../styles/forms.css';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Login = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        'https://wolf-backend.onrender.com/login',
-        {
+      const response = await fetch('https://wolf-backend.onrender.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           username: username,
           password: password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-        }
-      );
+        }),
+        credentials: 'include',
+      });
 
       if (response.ok) {
-        const data = response.data;
+        const data = await response.json();
         login(data);
         console.log(data);
         navigate('/dashboard');
@@ -42,8 +37,6 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Error during login:', error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -66,8 +59,8 @@ const Login = () => {
             value={password}
             placeholder="password"
           />
-          <button className="submit" type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <button className="submit" type="submit">
+            Login
           </button>
         </form>
       </div>

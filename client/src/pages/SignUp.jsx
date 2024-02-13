@@ -2,7 +2,6 @@ import { useState } from 'react';
 import '../styles/forms.css';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Signup = () => {
   const { login } = useAuth();
@@ -15,22 +14,24 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      const response = await fetch(
         `https://wolf-backend.onrender.com/sign-up`,
         {
-          username: username,
-          email: email,
-          password: password,
-        },
-        {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          withCredentials: true,
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+          }),
+          credentials: 'include',
         }
       );
 
-      const data = response.data;
+      console.log('response:', response);
+      const data = await response.json();
       login(data);
       navigate('/dashboard');
       console.log('User created successfully');
