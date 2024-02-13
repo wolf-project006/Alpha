@@ -9,11 +9,15 @@ const path = require('path');
 dotenv.config({
   path: './.env',
 });
+const corsOptions = {
+  origin: 'https://wolf-frontend.onrender.com',
+  credentials: true,
+};
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -50,9 +54,9 @@ app.post('/sign-up', async (req, res) => {
     });
     const user = await knex('user_table').where({ username }).first();
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
-    res.status(201).json({ token });
+    res.status(201).json({ success: true, token });
   } catch (error) {
-    res.status(500).json('Error creating user');
+    res.status(500).json({ success: false, message: 'Error creating user' });
   }
 });
 
@@ -63,7 +67,12 @@ app.post('/login', async (req, res) => {
     const user = await knex('user_table').where({ username }).first();
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
-      res.status(200).json({ token });
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3 * 24 * 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === 'production',
+      });
+      res.status(200).json({ success: true });
     } else {
       res.status(401).json('Invalid credentials');
     }

@@ -22,11 +22,11 @@ const Login = () => {
           username: username,
           password: password,
         }),
+        credentials: 'include',
       });
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token);
         login(data);
         console.log(data);
         navigate('/dashboard');

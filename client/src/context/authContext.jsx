@@ -7,15 +7,16 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem('token', userData.token);
+    document.cookie = `token=${userData.token}; path=/; HttpOnly`;
   };
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('token');
+    document.cookie =
+      'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly';
   };
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = cookie.parse(document.cookie).token;
 
     if (storedToken) {
       const decodedToken = decodeToken(storedToken);
