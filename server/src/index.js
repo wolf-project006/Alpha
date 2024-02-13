@@ -16,6 +16,12 @@ app.use(cors());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 app.post('/sign-up', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -41,7 +47,8 @@ app.post('/sign-up', async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    const token = jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '3d' });
+    const user = await knex('user_table').where({ username }).first();
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
     res.status(201).json({ token });
   } catch (error) {
     res.status(500).json('Error creating user');
@@ -182,7 +189,7 @@ app.post('/post_table', async (req, res) => {
 app.delete('/user_table/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deleteUser = await knex('user_table').where('id', '=', id).del();
+    await knex('user_table').where('id', '=', id).del();
 
     res.status(200).send('User has been deleted');
   } catch (err) {
@@ -194,7 +201,7 @@ app.delete('/user_table/:id', async (req, res) => {
 app.delete('/post_table/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deletePost = await knex('post_table').where('id', '=', id).del();
+    await knex('post_table').where('id', '=', id).del();
 
     res.status(200).send('Post has been deleted');
   } catch (err) {
