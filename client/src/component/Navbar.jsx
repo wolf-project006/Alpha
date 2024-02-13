@@ -67,6 +67,9 @@ const Navbar = () => {
         <li className="nav-item">
           <Link to="sign-up" className="nav-links-mobile" onClick={closeMobileMenu}>Sign Up</Link>
         </li>
+        <li className="nav-item">
+          <Link to="login" className="nav-links-mobile" onClick={closeMobileMenu}>Login</Link>
+        </li>
       </ul>
       {button && <Button buttonStyle='btn--outline' >SIGN UP</Button>}
       {button && <LoginButton buttonStyle='btn--outline' >LOGIN</LoginButton>}
