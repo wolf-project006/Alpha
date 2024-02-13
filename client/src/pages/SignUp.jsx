@@ -28,16 +28,12 @@ const Signup = () => {
         }),
       });
 
-      if (response.ok) {
-        console.log('response:', response);
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        login(data);
-        navigate('/dashboard');
-        console.log('User created successfully');
-      } else {
-        console.error('Error creating user:', data);
-      }
+      console.log('response:', response);
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      login(data);
+      navigate('/dashboard');
+      console.log('User created successfully');
     } catch (error) {
       console.error('Error creating user', error.message);
     }
