@@ -4,7 +4,7 @@ const knex = require('../db/knex.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const path = require('path');
+const cookieParser = require('cookie-parser');
 
 dotenv.config({
   path: './.env',
@@ -18,14 +18,9 @@ const app = express();
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 app.post('/sign-up', async (req, res) => {
   const { username, email, password } = req.body;
@@ -52,10 +47,11 @@ app.post('/sign-up', async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    const user = await knex('user_table').where({ username }).first();
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
-    console.log(JWT_SECRET);
-    res.status(201).json({ success: true, token });
+    // const user = await knex('user_table').where({ username }).first();
+    // const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
+    // console.log(JWT_SECRET);
+    //res.status(201).json({ success: true, token });
+    res, send('User Signin successfully');
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error creating user' });
   }
@@ -67,13 +63,12 @@ app.post('/login', async (req, res) => {
   try {
     const user = await knex('user_table').where({ username }).first();
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
       res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 3 * 24 * 60 * 60 * 1000,
-        secure: process.env.NODE_ENV === 'production',
       });
-      res.status(200).json({ success: true });
+      //res.status(200).json({ success: true });
+      res.json('Login successful');
     } else {
       res.status(401).json('Invalid credentials');
     }
@@ -81,32 +76,52 @@ app.post('/login', async (req, res) => {
     res.status(500).json('Error during login');
   }
 });
-app.get('/dashboard', authenticateToken, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const userData = await knex('user_table').where({ id: userId }).first();
 
-    if (userData) {
-      res.json(userData);
-    } else {
-      res.status(404).json({ error: 'User not found' });
+const isAuthenticated = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      req.user = { id: decoded.userId };
+      next();
+    } catch (error) {
+      res.status(401).send('Unauthorized');
     }
-  } catch (error) {
-    console.error('Error fetching dashboard data:', error);
-    res.status(500).json({ error: 'Error fetching dashboard data' });
+  } else {
+    res.status(401).send('Unauthorized');
   }
+};
+app.get('/dashboard', isAuthenticated, (req, res) => {
+  res.send('This is a protected route');
 });
 
-function authenticateToken(req, res, next) {
-  const token = req.header('Authorization');
-  if (!token) return res.status(401).json('Unauthorized');
+// app.get('/dashboard', authenticateToken, async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const userData = await knex('user_table').where({ id: userId }).first();
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json('Forbidden');
-    req.user = user;
-    next();
-  });
-}
+//     if (userData) {
+//       res.json(userData);
+//     } else {
+//       res.status(404).json({ error: 'User not found' });
+//     }
+//   } catch (error) {
+//     console.error('Error fetching dashboard data:', error);
+//     res.status(500).json({ error: 'Error fetching dashboard data' });
+//   }
+// });
+
+// function authenticateToken(req, res, next) {
+//   const token = req.header('Authorization');
+//   if (!token) return res.status(401).json('Unauthorized');
+
+//   jwt.verify(token, JWT_SECRET, (err, user) => {
+//     if (err) return res.status(403).json('Forbidden');
+//     req.user = user;
+//     next();
+//   });
+// }
 
 //timestamp
 const timeStamp = new Date().toISOString();
