@@ -7,18 +7,16 @@ import UploadImage from './component/UploadImage';
 import { AuthProvider } from './context/authContext';
 import Signup from './pages/SignUp';
 
-
 function App() {
   return (
     <>
-      <UploadImage/>
       <Router>
         <AuthProvider>
-        <Navbar/>
+          <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/dashboard" component={<Dashboard/>} />
-            <Route path='/sign-up'element={<Signup/>}/>
+            <Route path="/dashboard" component={<Dashboard />} />
+            <Route path="/sign-up" element={<Signup />} />
           </Routes>
         </AuthProvider>
       </Router>
