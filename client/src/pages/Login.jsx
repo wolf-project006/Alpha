@@ -28,6 +28,7 @@ const Login = () => {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         login(data);
+        console.log(data);
         navigate('/dashboard');
         console.log('Login successfully');
       } else {
