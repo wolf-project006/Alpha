@@ -27,6 +27,11 @@ const Signup = () => {
           password: password,
         }),
       });
+      if (!response.ok) {
+        console.error('Error creating user:', response.status);
+
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
