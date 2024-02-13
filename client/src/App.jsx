@@ -15,7 +15,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/dashboard" component={<Dashboard/>} />
+            <Route path="/Dashboard" element={<Dashboard/>} />
             <Route path='/sign-up'element={<Signup/>}/>
             <Route path='/login'element={<Login/>}/>
           </Routes>
