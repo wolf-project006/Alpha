@@ -3,8 +3,6 @@ import '../styles/forms.css';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
-const URL = import.meta.env.VITE_URL;
-
 const Signup = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState('');

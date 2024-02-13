@@ -14,7 +14,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/dashboard" component={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/sign-up" element={<Signup />} />
           </Routes>
         </AuthProvider>
