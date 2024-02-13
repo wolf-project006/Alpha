@@ -31,7 +31,7 @@ const Login = () => {
       );
 
       if (response.ok) {
-        const data = response;
+        const data = response.data;
         login(data);
         console.log(data);
         navigate('/dashboard');
