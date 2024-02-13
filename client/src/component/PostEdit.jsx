@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; //Import styles
+import "../styles/PostEdit.css"
 
 const PostEdit = () => {
     const [content, setContent] = useState('');
@@ -11,11 +12,13 @@ const PostEdit = () => {
     
     return (
         <>
+        <div className='richText'>
         <ReactQuill 
           theme="snow"
           value={content}
           onChange={handleChange}
         />
+        </div>
       </>
     )
 }
