@@ -16,8 +16,7 @@ const Dashboard = () => {
             <button onClick={logout}>Logout</button>
           </>
         )}
-      </div>{' '}
-      */
+      </div>
       <UserPosts />
     </>
   );
