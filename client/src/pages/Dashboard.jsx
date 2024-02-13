@@ -4,7 +4,7 @@ import UserCard from '../component/UserCard';
 import { useAuth } from '../context/authContext';
 
 const Dashboard = () => {
-  const [user, logout] = useAuth(null);
+  const { user, logout } = useAuth();
 
   return (
     <>
