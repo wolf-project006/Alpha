@@ -7,13 +7,12 @@ import { AuthProvider } from './context/authContext';
 import Signup from './pages/SignUp';
 import Login from "./pages/Login"
 
-
 function App() {
   return (
     <>
       <Router>
         <AuthProvider>
-        <Navbar/>
+          <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="/dashboard" component={<Dashboard/>} />

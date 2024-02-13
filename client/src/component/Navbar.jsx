@@ -11,14 +11,14 @@ const Navbar = () => {
   const [showSignup, setShowSignup] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
 
-  const handleClick = () => setClick(!click)
-  const closeMobileMenu = () => setClick(false)
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
 
-  const showButton = ()=> {
-    if(window.innerWidth <= 960) {
-      setButton(false)
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
     } else {
-      setButton(true)
+      setButton(true);
     }
   }
   const handleLoginClick = () => {
@@ -27,36 +27,25 @@ const Navbar = () => {
   }
 
 
-  const handleSignupClick = () => {
-    closeMobileMenu()
-    setShowSignup(!showSignup)
-  }
 
+  const handleSignupClick = () => {
+    closeMobileMenu();
+    setShowSignup(!showSignup);
+  };
 
   useEffect(() => {
-    showButton()
-  },[])
+    showButton();
+  }, []);
 
-  window.addEventListener('resize', showButton)
+  window.addEventListener('resize', showButton);
 
   return (
     <>
-  <nav className="navbar">
-  <div className="navbar-container">
-    <Link to="/" className="navbar-logo" onClick={closeMobileMenu}> Team Wolfie </Link>
-
-      <div className="menu-icon" onClick={handleClick}> 
-        <i className={click ? 'fas fa-times' : 'fas fa-bars'}/>
-      </div>
-      <ul className={click ? "nav-menu active" : "nav-menu"}>
-        <li className="nav-item">
-          <Link to='/' className="nav-links" onClick={closeMobileMenu}>
-            Home
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-            Services
+      <nav className="navbar">
+        <div className="navbar-container">
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+            {' '}
+            Team Wolfie{' '}
           </Link>
         </li>
         <li className="nav-item">
@@ -65,7 +54,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="sign-up" className="nav-links-mobile" onClick={closeMobileMenu}>Sign Up</Link>
+          <Link to="/sign-up" className="nav-links-mobile" onClick={closeMobileMenu}>Sign Up</Link>
         </li>
         <li className="nav-item">
           <Link to="login" className="nav-links-mobile" onClick={closeMobileMenu}>Login</Link>
