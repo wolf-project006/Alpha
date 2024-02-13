@@ -4,20 +4,20 @@ import UserCard from '../component/UserCard';
 import { useAuth } from '../context/authContext';
 
 const Dashboard = () => {
-  // const [ user, logout ] = useAuth(null);
+  const [user, logout] = useAuth(null);
 
   return (
     <>
       <h1>i'm a Dashboard</h1>
-        <div>
+      <div>
         {user && (
           <>
             <UserCard user={user} />
             <button onClick={logout}>Logout</button>
           </>
         )}
-      </div> */
-
+      </div>{' '}
+      */
       <UserPosts />
     </>
   );
