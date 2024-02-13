@@ -3,6 +3,8 @@ import "../App.css"
 import Navbar from "../component/Navbar";
 import HeroSection from '../component/HeroSection';
 import Cards from '../component/Cards';
+import Footer from '../component/Footer';
+import Dashboard from './Dashboard';
 
 const Home = () => {
   return (
@@ -10,6 +12,7 @@ const Home = () => {
       <div>
         <HeroSection/>
         <Cards/>
+        <Footer/>
       </div>
     </>
   );

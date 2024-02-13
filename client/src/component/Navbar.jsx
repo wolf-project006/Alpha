@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import "../styles/Navbar.css"
 import Signup from "../pages/SignUp";
+import { LoginButton } from "./LoginButton"
 
 const Navbar = () => {
   const [click , setClick] = useState(false)
   const [button, setButton] = useState(true)
   const [showSignup, setShowSignup] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
 
   const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false)
@@ -19,6 +21,11 @@ const Navbar = () => {
       setButton(true)
     }
   }
+  const handleLoginClick = () => {
+    closeMobileMenu()
+    setShowLogin(!showLogin)
+  }
+
 
   const handleSignupClick = () => {
     closeMobileMenu()
@@ -53,8 +60,8 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-            product
+          <Link to="/dashboard" className="nav-links" onClick={closeMobileMenu}>
+            Dashboard
           </Link>
         </li>
         <li className="nav-item">
@@ -62,6 +69,8 @@ const Navbar = () => {
         </li>
       </ul>
       {button && <Button buttonStyle='btn--outline' >SIGN UP</Button>}
+      {button && <LoginButton buttonStyle='btn--outline' >LOGIN</LoginButton>}
+      
       {showSignup && <Signup/>}
   </div>
 </nav>
