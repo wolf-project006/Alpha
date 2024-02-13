@@ -16,7 +16,7 @@ app.use(cors());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.post('/signup', async (req, res) => {
+app.post('/sign-up', async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
