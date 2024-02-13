@@ -54,6 +54,7 @@ app.post('/sign-up', async (req, res) => {
     });
     const user = await knex('user_table').where({ username }).first();
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
+    console.log(JWT_SECRET);
     res.status(201).json({ success: true, token });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error creating user' });
