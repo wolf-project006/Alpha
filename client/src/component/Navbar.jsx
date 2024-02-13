@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from './Button';
-import '../styles/Navbar.css';
-import Signup from '../pages/SignUp';
+import React, {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
+import { Button } from "./Button";
+import "../styles/Navbar.css"
+import Signup from "../pages/SignUp";
+import { LoginButton } from "./LoginButton"
 
 const Navbar = () => {
-  const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
-  const [showSignup, setShowSignup] = useState(false);
+  const [click , setClick] = useState(false)
+  const [button, setButton] = useState(true)
+  const [showSignup, setShowSignup] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -18,7 +20,13 @@ const Navbar = () => {
     } else {
       setButton(true);
     }
-  };
+  }
+  const handleLoginClick = () => {
+    closeMobileMenu()
+    setShowLogin(!showLogin)
+  }
+
+
 
   const handleSignupClick = () => {
     closeMobileMenu();
@@ -39,40 +47,25 @@ const Navbar = () => {
             {' '}
             Team Wolfie{' '}
           </Link>
-
-          <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Services
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                product
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/sign-up"
-                className="nav-links-mobile"
-                onClick={closeMobileMenu}
-              >
-                Sign Up
-              </Link>
-            </li>
-          </ul>
-          {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
-          {showSignup && <Signup />}
-        </div>
-      </nav>
+        </li>
+        <li className="nav-item">
+          <Link to="/dashboard" className="nav-links" onClick={closeMobileMenu}>
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/sign-up" className="nav-links-mobile" onClick={closeMobileMenu}>Sign Up</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="login" className="nav-links-mobile" onClick={closeMobileMenu}>Login</Link>
+        </li>
+      </ul>
+      {button && <Button buttonStyle='btn--outline' >SIGN UP</Button>}
+      {button && <LoginButton buttonStyle='btn--outline' >LOGIN</LoginButton>}
+      
+      {showSignup && <Signup/>}
+  </div>
+</nav>
     </>
   );
 };

@@ -1,0 +1,24 @@
+.footer-container {
+  background-color: black;
+  color: white;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+.footer-subscription-text {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.footer-subcription-heading {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.input-area {
+  color: white;
+}
+
+.input-area input{
+  border: 2px white;
+}

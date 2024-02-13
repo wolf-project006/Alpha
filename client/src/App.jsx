@@ -5,6 +5,7 @@ import Home from '../src/pages/Home';
 import Dashboard from './pages/Dashboard';
 import { AuthProvider } from './context/authContext';
 import Signup from './pages/SignUp';
+import Login from "./pages/Login"
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/sign-up" element={<Signup />} />
+            <Route path="/dashboard" component={<Dashboard/>} />
+            <Route path='/sign-up'element={<Signup/>}/>
+            <Route path='/login'element={<Login/>}/>
           </Routes>
         </AuthProvider>
       </Router>
