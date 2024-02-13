@@ -71,8 +71,20 @@ app.post('/login', async (req, res) => {
     res.status(500).json('Error during login');
   }
 });
-app.get('/dashboard', authenticateToken, (req, res) => {
-  res.json('This is a protected route');
+app.get('/dashboard', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userData = await knex('user_table').where({ id: userId }).first();
+
+    if (userData) {
+      res.json(userData);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error);
+    res.status(500).json({ error: 'Error fetching dashboard data' });
+  }
 });
 
 function authenticateToken(req, res, next) {
