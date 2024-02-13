@@ -15,6 +15,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+
     if (storedToken) {
       const decodedToken = decodeToken(storedToken);
       const isTokenExpired =
