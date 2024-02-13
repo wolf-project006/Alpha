@@ -42,8 +42,7 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            {' '}
-            Team Wolfie{' '}
+            Team Wolfie
           </Link>
           <ul>
             <li className="nav-item">
