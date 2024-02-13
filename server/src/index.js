@@ -63,7 +63,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json('Error during login');
   }
 });
-app.get('/protected', authenticateToken, (req, res) => {
+app.get('/dashboard', authenticateToken, (req, res) => {
   res.json('This is a protected route');
 });
 
