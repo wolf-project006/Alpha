@@ -14,26 +14,27 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: password,
-        }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        login(data);
-        navigate('/dashboard');
-        console.log('User created successfully');
-      } else {
-        console.error('Error creating user:', data);
-      }
+      const response = await fetch(
+        `https://wolf-backend.onrender.com/sign-up`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+          }),
+        }
+      );
+
+      console.log('response:', response);
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      login(data);
+      navigate('/dashboard');
+      console.log('User created successfully');
     } catch (error) {
       console.error('Error creating user', error.message);
     }
