@@ -15,9 +15,11 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+
           </Routes>
         </AuthProvider>
       </Router>
