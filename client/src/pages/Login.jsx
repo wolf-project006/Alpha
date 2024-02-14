@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('https://wolf-backend.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,12 +22,13 @@ const Login = () => {
           username: username,
           password: password,
         }),
+        credentials: 'include',
       });
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token);
         login(data);
+        console.log(data);
         navigate('/dashboard');
         console.log('Login successfully');
       } else {

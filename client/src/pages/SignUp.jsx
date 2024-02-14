@@ -26,12 +26,12 @@ const Signup = () => {
             email: email,
             password: password,
           }),
+          credentials: 'include',
         }
       );
 
       console.log('response:', response);
       const data = await response.json();
-      localStorage.setItem('token', data.token);
       login(data);
       navigate('/dashboard');
       console.log('User created successfully');
