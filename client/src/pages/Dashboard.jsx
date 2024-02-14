@@ -92,6 +92,7 @@ const Dashboard = () => {
       <div className="post-area">
         <UserPosts />
       </div>
+
     </>
   );
 };

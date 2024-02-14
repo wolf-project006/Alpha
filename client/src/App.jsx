@@ -1,11 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './component/Navbar';
-import Home from '../src/pages/Home';
+import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import { AuthProvider } from './context/authContext';
 import Signup from './pages/SignUp';
-import Login from "./pages/Login"
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -15,9 +15,11 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/Dashboard" element={<Dashboard/>} />
-            <Route path='/sign-up'element={<Signup/>}/>
-            <Route path='/login'element={<Login/>}/>
+
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/sign-up" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+
           </Routes>
         </AuthProvider>
       </Router>

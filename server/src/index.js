@@ -4,15 +4,21 @@ const knex = require('../db/knex.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
 dotenv.config({
   path: './.env',
 });
+const corsOptions = {
+  origin: 'https://wolf-frontend.onrender.com',
+  credentials: true,
+};
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -41,10 +47,13 @@ app.post('/sign-up', async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    const token = jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '3d' });
-    res.status(201).json({ token });
+    // const user = await knex('user_table').where({ username }).first();
+    // const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
+    // console.log(JWT_SECRET);
+    //res.status(201).json({ success: true, token });
+    res, send('User Signin successfully');
   } catch (error) {
-    res.status(500).json('Error creating user');
+    res.status(500).json({ success: false, message: 'Error creating user' });
   }
 });
 
@@ -54,8 +63,12 @@ app.post('/login', async (req, res) => {
   try {
     const user = await knex('user_table').where({ username }).first();
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
-      res.status(200).json({ token });
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+      res.cookie('token', token, {
+        httpOnly: true,
+      });
+      //res.status(200).json({ success: true });
+      res.json('Login successful');
     } else {
       res.status(401).json('Invalid credentials');
     }
@@ -63,20 +76,52 @@ app.post('/login', async (req, res) => {
     res.status(500).json('Error during login');
   }
 });
-app.get('/dashboard', authenticateToken, (req, res) => {
-  res.json('This is a protected route');
+
+const isAuthenticated = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      req.user = { id: decoded.userId };
+      next();
+    } catch (error) {
+      res.status(401).send('Unauthorized');
+    }
+  } else {
+    res.status(401).send('Unauthorized');
+  }
+};
+app.get('/dashboard', isAuthenticated, (req, res) => {
+  res.send('This is a protected route');
 });
 
-function authenticateToken(req, res, next) {
-  const token = req.header('Authorization');
-  if (!token) return res.status(401).json('Unauthorized');
+// app.get('/dashboard', authenticateToken, async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const userData = await knex('user_table').where({ id: userId }).first();
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json('Forbidden');
-    req.user = user;
-    next();
-  });
-}
+//     if (userData) {
+//       res.json(userData);
+//     } else {
+//       res.status(404).json({ error: 'User not found' });
+//     }
+//   } catch (error) {
+//     console.error('Error fetching dashboard data:', error);
+//     res.status(500).json({ error: 'Error fetching dashboard data' });
+//   }
+// });
+
+// function authenticateToken(req, res, next) {
+//   const token = req.header('Authorization');
+//   if (!token) return res.status(401).json('Unauthorized');
+
+//   jwt.verify(token, JWT_SECRET, (err, user) => {
+//     if (err) return res.status(403).json('Forbidden');
+//     req.user = user;
+//     next();
+//   });
+// }
 
 //timestamp
 const timeStamp = new Date().toISOString();
@@ -182,7 +227,7 @@ app.post('/post_table', async (req, res) => {
 app.delete('/user_table/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deleteUser = await knex('user_table').where('id', '=', id).del();
+    await knex('user_table').where('id', '=', id).del();
 
     res.status(200).send('User has been deleted');
   } catch (err) {
@@ -194,7 +239,7 @@ app.delete('/user_table/:id', async (req, res) => {
 app.delete('/post_table/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deletePost = await knex('post_table').where('id', '=', id).del();
+    await knex('post_table').where('id', '=', id).del();
 
     res.status(200).send('Post has been deleted');
   } catch (err) {
