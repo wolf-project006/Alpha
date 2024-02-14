@@ -16,8 +16,8 @@ body {
 
 .title {
   padding-top: 40px;
-  color: #5574aa;
-  font-family: 'Ubuntu', sans-serif;
+  color: #242424;
+  font-family: "Ubuntu", sans-serif;
   font-weight: bold;
   font-size: 23px;
   display: flex;
@@ -41,7 +41,7 @@ input {
   margin-bottom: 50px;
   text-align: center;
   margin-bottom: 27px;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
 form {
@@ -60,18 +60,22 @@ input:focus {
   cursor: pointer;
   border-radius: 5em;
   color: #fff;
-  background: linear-gradient(to right, #272cb0, #406ffb);
+  background: #242424;
   border: 0;
   margin-top: 30px;
   padding-left: 40px;
   padding-right: 40px;
   padding-bottom: 10px;
   padding-top: 10px;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 13px;
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
-
+/*modificado*/
+.submit:hover {
+  background-color: #272cb0;
+  transition: all 0.3s ease-out;
+}
 @media (max-width: 600px) {
   .main {
     border-radius: 0px;

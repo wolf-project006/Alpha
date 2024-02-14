@@ -1,13 +1,13 @@
-
+/*modificado*/
 .navbar {
-  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  background: #242424;
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 999;
 }
 
@@ -16,19 +16,16 @@
   justify-content: center;
   align-items: center;
   height: 80px;
-  max-width: 1500px;
+  max-width: 100%;
 }
 
 .navbar-logo {
-  justify-self: start;
-  margin-left: 20px;
-  text-decoration: none;
-  cursor: pointer;
+  color: white;
   font-size: 2rem;
   text-decoration: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  color: white;
 }
 
 .nav-menu {
@@ -46,7 +43,6 @@
   margin-left: 0.5rem;
   font-size: 1.8rem;
 }
-
 
 .nav-icon {
   display: none;
@@ -79,7 +75,7 @@
 }
 
 .menu-icon {
-display: none;
+  display: none;
 }
 
 @media screen and (max-width: 960px) {
@@ -101,7 +97,7 @@ display: none;
   }
 
   .nav-menu.active {
-    background: #242222;
+    background: #242424;
     left: 0;
     opacity: 1;
     transition: all 0.5s ease;

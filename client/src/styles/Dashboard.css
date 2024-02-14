@@ -21,7 +21,7 @@
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
-  background: url(../img/worfie.jpg), lightgray 50% ;
+  background: url(../img/worfie.jpg), rgb(252, 252, 252) 50% ;
   background-size: contain;
 }
 
